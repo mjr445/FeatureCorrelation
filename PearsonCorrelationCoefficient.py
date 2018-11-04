@@ -7,6 +7,7 @@ from matplotlib.patches import Ellipse
 import matplotlib as mpl
 from sklearn.mixture import GaussianMixture as GMM
 
+
 # df is the data file that is being manipulated
 
 #  Following function is from the scikit learn site on GaussianMixture model
@@ -38,6 +39,7 @@ def plot_results(X, Y_, means, covariances, title):  # add index between covaria
     plt.yticks(())
     plt.title(title)
     plt.axis('on')
+
 
 df = pd.read_excel('Matthew_Data.xlsx')  # Import the initial data sheet from excel
 R_raw = df  # Store the initial data sheet as a separate variable
