@@ -10,27 +10,13 @@ pca = PCA(n_components=6, whiten=False, svd_solver='full')
 pca.fit(data)       # fit the model with data
 transform = pd.DataFrame(pca.fit_transform(data)) # apply the dimensionality reduction on data
 
-print "original shape:   ", data.shape
-print "transformed shape:", pca.transform(data).shape
-# The amount of variance explained by each of the selected components.
-# Equal to n_components largest eigenvalues  of the covariance matrix of X.
-# equivalent to LATENT in MATLAB
-print "Explained Variance: \n\t", pca.explained_variance_
-print "Explained Variance Ratio: \n\t", pca.explained_variance_ratio_
-print "Cumulative summation of Explained Variance Ratio: \n\t", pca.explained_variance_ratio_.cumsum()
-print "Singular Value: \n\t", pca.singular_values_
+
 
 components = pca.components_
-print "Number of Components after PCA: \n\t", len(components)
-# pca.components_ equivalent to coeff in MATLAB
-print "Components after PCA: \n\t", components
-
 ##########################################################################
 #Work in Progress:
 slope = np.diff(pca.explained_variance_, n=1)
 slopeOfSlope = np.diff(pca.explained_variance_, n=2)
-print(slopeOfSlope)
-print "length of slope", len(slope)
 cnt = 0;
 num_components = 1
 while cnt < (len(slope) - 1):
@@ -39,8 +25,6 @@ while cnt < (len(slope) - 1):
     num_components = cnt + 1
     cnt = cnt + 1
 
-print "Count:\t", cnt
-print "Number of Components:\t", num_components
 ###########################################################################
 
 invTran = pd.DataFrame(pca.inverse_transform(transform))

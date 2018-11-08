@@ -6,6 +6,7 @@ import itertools
 from matplotlib.patches import Ellipse
 import matplotlib as mpl
 from sklearn.mixture import GaussianMixture as GMM
+from sklearn.decomposition import PCA
 
 # df is the data file that is being manipulated
 
@@ -74,6 +75,70 @@ plt.matshow(df.corr().abs(), fignum=2)
 plt.title("Correlation Matrix After Feature Selection Using PCC")
 plt.xlabel("Features")
 plt.ylabel("Features")
+
+plt.show()
+
+
+
+
+pca = PCA(n_components=6, whiten=False, svd_solver='full')
+pca.fit(df)       # fit the model with data
+transform = pd.DataFrame(pca.fit_transform(df)) # apply the dimensionality reduction on data
+
+
+
+components = pca.components_
+##########################################################################
+#Work in Progress:
+slope = np.diff(pca.explained_variance_, n=1)
+slopeOfSlope = np.diff(pca.explained_variance_, n=2)
+cnt = 0;
+num_components = 1
+while cnt < (len(slope) - 1):
+    if (abs(slopeOfSlope[cnt - 1]) - abs(slopeOfSlope[cnt])) <= 0.0001:
+        cnt = len(np.diff(pca.explained_variance_, n=2))
+    num_components = cnt + 1
+    cnt = cnt + 1
+
+###########################################################################
+
+invTran = pd.DataFrame(pca.inverse_transform(transform))
+
+fig = plt.figure(num=None, figsize=(26, 12), dpi=80, facecolor='w', edgecolor='k')
+fig.suptitle('PCA Component Scatter Plots', fontsize=16)
+
+plt.subplot(2, 2, 1)
+plt.scatter(df.iloc[1:, 0], df.iloc[1:, 1], c='blue', alpha=0.2)  # scatter plot: first two components in data file
+plt.scatter(invTran.iloc[:, 0], invTran.iloc[:, 1], c='red', alpha=0.8)  # scatter plot: component 1 and 2 after PCA
+plt.axis('equal')
+plt.xlabel("Decomposed Feature1")
+plt.ylabel("Decomposed Feature2")
+
+plt.subplot(2, 2, 2)
+plt.scatter(df.iloc[1:, 0], df.iloc[1:, 1], c='red', alpha=0.2)  # line 62-75 scatter plot:
+plt.scatter(df.iloc[1:, 2], df.iloc[1:, 3], c='red', alpha=0.2)  # all 26 components in data file
+plt.scatter(df.iloc[1:, 4], df.iloc[1:, 5], c='red', alpha=0.2)
+plt.scatter(df.iloc[1:, 6], df.iloc[1:, 7], c='red', alpha=0.2)
+plt.scatter(df.iloc[1:, 8], df.iloc[1:, 9], c='red', alpha=0.2)
+plt.scatter(df.iloc[1:, 10], df.iloc[1:, 11], c='red', alpha=0.2)
+plt.scatter(df.iloc[1:, 12], df.iloc[1:, 13], c='red', alpha=0.2)
+plt.scatter(df.iloc[1:, 14], df.iloc[1:, 15], c='red', alpha=0.2)
+plt.scatter(df.iloc[1:, 16], df.iloc[1:, 17], c='red', alpha=0.2)
+plt.scatter(df.iloc[1:, 18], df.iloc[1:, 19], c='red', alpha=0.2)
+plt.scatter(df.iloc[1:, 20], df.iloc[1:, 21], c='red', alpha=0.2)
+plt.scatter(df.iloc[1:, 22], df.iloc[1:, 23], c='red', alpha=0.2)
+plt.scatter(df.iloc[1:, 24], df.iloc[1:, 25], c='red', alpha=0.2)
+plt.scatter(invTran.iloc[:, 2], invTran.iloc[:, 3], c='blue', alpha=0.5)  # scatter plot: component 1 and 2 after PCA
+plt.axis('equal')
+plt.xlabel("Decomposed Feature3")
+plt.ylabel("Decomposed Feature4")
+
+plt.subplot(2, 2, 3)
+plt.scatter(df.iloc[1:, 0], df.iloc[1:, 1], c='cyan', alpha=0.2)  # scatter plot: first two components in data file
+plt.scatter(invTran.iloc[:, 4], invTran.iloc[:, 5], c='red', alpha=0.8)  # scatter plot: component 1 and 2 after PCA
+plt.axis('equal')
+plt.xlabel("Decomposed Feature5")
+plt.ylabel("Decomposed Feature6")
 
 plt.show()
 
