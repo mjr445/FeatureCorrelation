@@ -68,7 +68,7 @@ for x, val in so.iteritems():  # Iterates through correlation pairs > 0.9
     else:
         drop_columns.add(x[1])
 
-
+df =df.drop(drop_columns,axis=1)
 # Plots the new correlation matrix after feature selection has been performed
 plt.figure(2)
 plt.matshow(df.corr().abs(), fignum=2)
