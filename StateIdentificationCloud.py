@@ -149,4 +149,4 @@ plot_results(np.array(df), GaussianMix.predict(df),GaussianMix.means_,GaussianMi
 plt.show()
 
 clf = svm.SVC(gamma='scale')
-# fit() - Ask about how to use
+# fit() - Ask about how to use fit
