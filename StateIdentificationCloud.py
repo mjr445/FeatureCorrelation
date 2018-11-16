@@ -41,6 +41,9 @@ def plot_results(X, Y_, means, covariances, title):  # add index between covaria
     plt.title(title)
     plt.axis('on')
 
+##################### Pearson Correlation Coefficient Feature Selection Begins ######################
+
+
 df = pd.read_excel('Matthew_Data.xlsx')  # Import the initial data sheet from excel
 R_raw = df  # Store the initial data sheet as a separate variable
 corr_mat = R_raw.corr().abs()  # Makes a correlation matrix given the data sheet, converts to absolute values
@@ -69,7 +72,7 @@ for x, val in so.iteritems():  # Iterates through correlation pairs > 0.9
     else:
         drop_columns.add(x[1])
 
-df =df.drop(drop_columns,axis=1)
+df = df.drop(drop_columns,axis=1)
 pcc = df
 # Plots the new correlation matrix after feature selection has been performed
 plt.figure(2)
@@ -79,6 +82,12 @@ plt.xlabel("Features")
 plt.ylabel("Features")
 
 plt.show()
+
+
+
+############################ PCA Block Begins ###########################
+
+
 
 pca = PCA(n_components=6, whiten=False, svd_solver='full')
 pca.fit(df)       # fit the model with data
@@ -98,7 +107,7 @@ while cnt < (len(slope) - 1):
     num_components = cnt + 1
     cnt = cnt + 1
 
-###########################################################################
+##########################################################################
 
 invTran = pd.DataFrame(pca.inverse_transform(transform))
 
@@ -142,11 +151,11 @@ plt.show()
 
 
 
-#  The following code fits a GaussianMixture model on the cleaned data and graphs it.
+############  The following code fits a GaussianMixture model on the cleaned data and graphs it. #####################
 GaussianMix=GMM(n_components=2,covariance_type='full',max_iter=800,init_params='random').fit(df)
 color_iter = itertools.cycle(['navy', 'c'])
 plot_results(np.array(df), GaussianMix.predict(df),GaussianMix.means_,GaussianMix.covariances_,"Gaussian Mixture")
 plt.show()
 
 clf = svm.SVC(gamma='scale')
-# fit() - Ask about how to use fit
+clf.fit(pcc)
