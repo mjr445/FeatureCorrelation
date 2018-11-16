@@ -11,7 +11,7 @@ from sklearn.svm import LinearSVC
 
 # df is the data file that is being manipulated
 
-#  Following function is from the scikit learn site on GaussianMixture model
+# Following function is from the scikit learn site on GaussianMixture model
 
 
 def plot_results(X, Y_, means, covariances, title):  # add index between covariance and title if you want subplots.
