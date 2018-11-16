@@ -7,7 +7,6 @@ from matplotlib.patches import Ellipse
 import matplotlib as mpl
 from sklearn.mixture import GaussianMixture as GMM
 from sklearn.decomposition import PCA
-from sklearn import svm
 
 # df is the data file that is being manipulated
 
@@ -73,7 +72,6 @@ for x, val in so.iteritems():  # Iterates through correlation pairs > 0.9
         drop_columns.add(x[1])
 
 df = df.drop(drop_columns,axis=1)
-pcc = df
 # Plots the new correlation matrix after feature selection has been performed
 plt.figure(2)
 plt.matshow(df.corr().abs(), fignum=2)
@@ -157,5 +155,4 @@ color_iter = itertools.cycle(['navy', 'c'])
 plot_results(np.array(df), GaussianMix.predict(df),GaussianMix.means_,GaussianMix.covariances_,"Gaussian Mixture")
 plt.show()
 
-clf = svm.SVC(gamma='scale')
-clf.fit(pcc)
+
