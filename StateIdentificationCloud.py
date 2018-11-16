@@ -160,3 +160,4 @@ color_iter = itertools.cycle(['navy', 'c'])
 y = GaussianMix.predict(df)
 clf = LinearSVC()
 clf.fit(X, y)
+
