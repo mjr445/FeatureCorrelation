@@ -161,3 +161,10 @@ y = GaussianMix.predict(df)
 clf = LinearSVC()
 clf.fit(X, y)
 
+Y = clf.predict(X)
+num = 0
+for index in range(0, len(Y)):
+    if Y[index] == y[index]:
+        num += 1
+
+print(num/len(Y) * 100)
