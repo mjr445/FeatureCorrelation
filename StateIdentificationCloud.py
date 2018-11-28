@@ -161,6 +161,8 @@ y = GaussianMix.predict(df)
 clf = LinearSVC()
 clf.fit(X, y)
 
+joblib.dump(clf, 'finalized_model.joblib')
+
 Y = clf.predict(X)
 num = 0
 for index in range(0, len(Y)):
